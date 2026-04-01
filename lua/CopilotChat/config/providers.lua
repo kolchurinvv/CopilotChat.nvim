@@ -278,6 +278,8 @@ end
 ---@return table
 local function prepare_chat_input(inputs, opts)
   local is_o1 = vim.startswith(opts.model.id, 'o1')
+  local regex = vim.regex('codex')
+  local is_codex = regex.match_str(regex, opts.model.id) ~= nil
 
   inputs = vim.tbl_map(function(input)
     local output = {
@@ -324,7 +326,7 @@ local function prepare_chat_input(inputs, opts)
     end, opts.tools)
   end
 
-  if not is_o1 then
+  if not is_o1 and not is_codex then
     out.n = 1
     out.top_p = 1
     out.temperature = opts.temperature
