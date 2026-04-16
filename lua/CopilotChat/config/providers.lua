@@ -278,7 +278,7 @@ end
 ---@return table
 local function prepare_chat_input(inputs, opts)
   local is_o1 = vim.startswith(opts.model.id, 'o1')
-  local is_codex = regex.match_str(regex, opts.model.id) ~= nil
+  local is_codex = opts.model.id:find('codex') ~= nil
 
   inputs = vim.tbl_map(function(input)
     local output = {
